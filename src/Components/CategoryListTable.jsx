@@ -23,7 +23,6 @@ const CategoryListTable = () => {
     const fetchData = () => {
         getAllCategory()
             .then((res) => {
-                console.log(res);
                 setCategory(res.data.data);
             })
             .catch((error) => console.log(error));
@@ -33,7 +32,6 @@ const CategoryListTable = () => {
     const handleDeleteCategory = (catId) => {
         deleteCategory(catId)
             .then((res) => {
-                console.log(res);
                 toast.success(res.data.message);
                 fetchData();
             })
@@ -68,8 +66,8 @@ const CategoryListTable = () => {
                     </div>
                 </div>
                 <div className="overflow-auto">
-                    <table className="w-full text-sm text-left border-2 border-black">
-                        <thead className="text-xs uppercase bg-gray-50 border-2 border-black">
+                    <table className="w-full text-sm text-left border-2 border-black shadow-2xl dark:shadow-white">
+                        <thead className="text-xs uppercase bg-gray-50 border-2 border-black  dark:bg-indigo-950">
                             <tr>
                                 <th className="px-6 py-3">No</th>
                                 <th className="px-6 py-3">Name</th>

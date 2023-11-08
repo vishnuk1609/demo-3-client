@@ -7,37 +7,25 @@ import AddProductModal from "./Modal/AddProductModal";
 import toast from "react-hot-toast";
 import EditProductModal from "./Modal/EditProductModal";
 import { useAuth } from "../context/UserContext";
+import { useDispatch } from "react-redux";
+import { proudctList } from "../Redux/products/actions";
 
-const ProductsListTable = () => {
-    const [products, setProducts] = useState([]);
+const ProductsListTable = ({ products }) => {
+    // const [products, setProducts] = useState([]);
     // const [searchQuery, setSearchQuery] = useState("");
     const [showAddProductModal, setShowAddProductModal] = useState(false);
     const [showEditProductModal, setShowEditProductModal] = useState(false);
     const [editProductId, setEditProductId] = useState("");
     const [editProductData, setEditProductData] = useState({});
     const { user } = useAuth();
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    // for fetching all the products
-    const fetchData = () => {
-        getAllProducts()
-            .then((res) => {
-                console.log(res.data);
-                setProducts(res.data.data);
-            })
-            .catch((error) => console.log(error));
-    };
+    const dispatch = useDispatch();
 
     // for handling delete product
     const handleDeleteProduct = (prodId) => {
         deleteProduct(prodId)
             .then((res) => {
-                console.log(res);
                 toast.success(res.data.message);
-                fetchData();
+                dispatch(proudctList());
             })
             .catch((error) => {
                 console.log(error);
@@ -52,7 +40,7 @@ const ProductsListTable = () => {
                         <button
                             className=" bg-green-600 text-white rounded-md px-5 py-2 hover:bg-green-700"
                             onClick={() => {
-                                if (role == "Admin") {
+                                if (user && user?.role?.includes("Admin")) {
                                     setShowAddProductModal(true);
                                 } else {
                                     toast.error("Admin persmission required");
@@ -65,7 +53,7 @@ const ProductsListTable = () => {
                 </div>
                 <div className="overflow-auto">
                     <table className="w-full text-sm text-left border-2 border-black">
-                        <thead className="text-xs uppercase bg-gray-50 border-2 border-black">
+                        <thead className="text-xs uppercase bg-gray-50 border-2 border-black dark:bg-indigo-950">
                             <tr>
                                 <th className="px-6 py-3">No</th>
                                 <th className="px-6 py-3">Name</th>
@@ -165,7 +153,6 @@ const ProductsListTable = () => {
             >
                 <AddProductModal
                     onClose={() => setShowAddProductModal(false)}
-                    fetchData={() => fetchData()}
                 />
             </ModalLayout>
 
@@ -178,7 +165,6 @@ const ProductsListTable = () => {
                     onClose={() => setShowEditProductModal(false)}
                     prodData={editProductData}
                     prodId={editProductId}
-                    fetchData={() => fetchData()}
                 />
             </ModalLayout>
         </>

@@ -85,7 +85,6 @@ const RegisterPage = () => {
                                     />
                                 </div>
                             </div>
-
                             <div>
                                 <div className="flex items-center justify-between">
                                     <label
@@ -108,7 +107,6 @@ const RegisterPage = () => {
                                     />
                                 </div>
                             </div>
-
                             <div>
                                 <button
                                     type="submit"

@@ -2,11 +2,14 @@ import { useEffect, useState } from "react";
 import { getAllCategory } from "../../Services/CategoryServices";
 import { editProduct } from "../../Services/ProductServices";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { proudctList } from "../../Redux/products/actions";
 
-const EditProductModal = ({ onClose, fetchData, prodId, prodData }) => {
+const EditProductModal = ({ onClose, prodId, prodData }) => {
     const [product, setProduct] = useState(prodData);
     const [productId, setProductId] = useState(prodId);
     const [category, setCategory] = useState([]);
+    const dispatch = useDispatch();
 
     // for getting the category data
     useEffect(() => {
@@ -28,9 +31,8 @@ const EditProductModal = ({ onClose, fetchData, prodId, prodData }) => {
 
         editProduct(productId, parsedProduct)
             .then((res) => {
-                console.log(res);
                 toast.success(res.data.message);
-                fetchData();
+                dispatch(proudctList());
                 onClose();
             })
             .catch((error) => {
@@ -56,7 +58,7 @@ const EditProductModal = ({ onClose, fetchData, prodId, prodData }) => {
                         Edit product
                     </h1>
                 </div>
-                <div className=" space-y-3 mt-3 tracking-wider font-semibold text-gray-700">
+                <div className=" space-y-3 mt-3 tracking-wider font-semibold text-gray-700 dark:text-white">
                     <div className="flex flex-col w-full">
                         <div className="w-4/12">Name</div>
                         <div className="text-black">

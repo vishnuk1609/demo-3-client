@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { getAllCategory } from "../../Services/CategoryServices";
 import { addNewProduct } from "../../Services/ProductServices";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { proudctList } from "../../Redux/products/actions";
 
-const AddProductModal = ({ onClose, fetchData }) => {
+const AddProductModal = ({ onClose }) => {
     const [category, setCategory] = useState([]);
     const [product, setProduct] = useState({
         name: "",
@@ -12,6 +14,7 @@ const AddProductModal = ({ onClose, fetchData }) => {
         category: "",
         stock: 0,
     });
+    const dispatch = useDispatch();
 
     // for getting the category data
     useEffect(() => {
@@ -31,9 +34,8 @@ const AddProductModal = ({ onClose, fetchData }) => {
         };
         addNewProduct(parsedProduct)
             .then((res) => {
-                console.log(res);
                 toast.success(res.data.message);
-                fetchData();
+                dispatch(proudctList())
                 onClose();
             })
             .catch((error) => {
@@ -53,13 +55,13 @@ const AddProductModal = ({ onClose, fetchData }) => {
 
     return (
         <>
-            <div className="w-[600px] h-90 p-5">
+            <div className="w-[600px] h-90 p-5 dark:bg-gray-950">
                 <div>
                     <h1 className=" uppercase font-bold tracking-wide text-xl">
                         Add new product
                     </h1>
                 </div>
-                <div className=" space-y-3 mt-3 tracking-wider font-semibold text-gray-700">
+                <div className=" space-y-3 mt-3 tracking-wider font-semibold text-gray-700  dark:text-white">
                     <div className="flex flex-col w-full">
                         <div className="w-4/12">Name</div>
                         <div className="text-black">
@@ -109,7 +111,7 @@ const AddProductModal = ({ onClose, fetchData }) => {
                                 onChange={handleOnChange}
                                 defaultValue={""}
                             >
-                                <option disabled value={""} >
+                                <option disabled value={""}>
                                     Select category
                                 </option>
                                 {category &&

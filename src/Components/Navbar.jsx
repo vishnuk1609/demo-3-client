@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/UserContext";
+import DarkModeSwitch from "./DarkModeSwitch";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -10,13 +11,16 @@ const Navbar = () => {
         localStorage.removeItem("Role");
         navigate("/login");
     };
-    
+
     return (
         <>
-            <div className="w-full flex bg-blue-950 h-16 items-center space-x-10 justify-end px-10">
+            <div className="w-full flex h-16 items-center space-x-10 justify-end px-10 transition-colors duration-1000 dark:bg-indigo-900 text-black  dark:text-white border-b-2  border-black">
+                <div className="">
+                    <DarkModeSwitch />
+                </div>
                 <div className="">
                     <Link to="/">
-                        <h1 className=" text-white font-semibold text-xl tracking-wide hover:cursor-pointer hover:text-gray-500">
+                        <h1 className=" font-semibold text-xl tracking-wide hover:cursor-pointer hover:text-gray-500">
                             Products
                         </h1>
                     </Link>
@@ -24,7 +28,7 @@ const Navbar = () => {
                 {user?.role?.includes("Admin") && (
                     <div className="">
                         <Link to="/category">
-                            <h1 className=" text-white font-semibold text-xl tracking-wide hover:cursor-pointer hover:text-gray-500">
+                            <h1 className="  font-semibold text-xl tracking-wide hover:cursor-pointer hover:text-gray-500">
                                 category
                             </h1>
                         </Link>

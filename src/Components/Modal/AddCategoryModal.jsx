@@ -11,7 +11,6 @@ const AddCategoryModal = ({ onClose, fecthData }) => {
     const handleCreateCategory = () => {
         createNewCategory(category)
             .then((res) => {
-                console.log(res);
                 toast.success(res.data.message);
                 fecthData();
                 onClose();
@@ -36,7 +35,7 @@ const AddCategoryModal = ({ onClose, fecthData }) => {
                         Crate new Category
                     </h1>
                 </div>
-                <div className=" space-y-3 mt-3 tracking-wider font-semibold text-gray-700">
+                <div className=" space-y-3 mt-3 tracking-wider font-semibold text-gray-700 dark:text-white">
                     <div className="flex flex-col w-full">
                         <div className="w-4/12">Name</div>
                         <div className="text-black">

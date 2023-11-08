@@ -23,7 +23,6 @@ const LoginPage = () => {
     const handleLogin = () => {
         login(formData)
             .then((res) => {
-                console.log(res.data);
                 localStorage.setItem("jwtToken", res.data.data[0].token);
                 localStorage.setItem("Role", res.data.data[0].user.role[0]);
                 setUser(res.data.data[0].user);
